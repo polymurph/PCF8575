@@ -1,4 +1,6 @@
 #include <msp430.h> 
+#include <stdbool.h>
+#include <stdint.h>
 #include "HAL/hal_i2c.h"
 #include "HWO/pcf8575.h"
 
@@ -25,9 +27,11 @@ int main(void)
 
 	while(1)
 	{
-	    pcf8575_write_ports(&gpio, 0xFF, 0x00);
+	    //pcf8575_write_ports(&gpio, 0xFF, 0x00);
+	    pcr8575_set_pin(&gpio,pcf8575_pin_1_3, false);
 	    __delay_cycles(100000);
-	    pcf8575_write_ports(&gpio, 0x00, 0xFF);
+	    //pcf8575_write_ports(&gpio, 0x00, 0xFF);
+	    pcr8575_set_pin(&gpio,pcf8575_pin_1_3, true);
 	    __delay_cycles(100000);
 	}
 

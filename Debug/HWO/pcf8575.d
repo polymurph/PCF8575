@@ -10,6 +10,7 @@ HWO/pcf8575.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/inclu
 HWO/pcf8575.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/machine/_types.h
 HWO/pcf8575.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/machine/_stdint.h
 HWO/pcf8575.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/sys/_stdint.h
+HWO/pcf8575.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/stdbool.h
 
 ../HWO/pcf8575.c: 
 ../HWO/pcf8575.h: 
@@ -21,3 +22,4 @@ C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/sys/_types.h:
 C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/machine/_types.h: 
 C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/machine/_stdint.h: 
 C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/sys/_stdint.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-msp430_18.12.4.LTS/include/stdbool.h: 

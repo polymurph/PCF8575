@@ -9,6 +9,7 @@
 #define HWO_PCF8575_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef uint8_t (*i2c_rx_cb_t)(uint8_t, uint8_t*, uint8_t);
 typedef uint8_t (*i2c_tx_cb_t)(uint8_t, const uint8_t*, uint8_t);
@@ -25,7 +26,7 @@ typedef enum {
 }pcf8575_addr_t;
 
 typedef enum{
-    pcf8575_pin_0_0,
+    pcf8575_pin_0_0 = 0x00,
     pcf8575_pin_0_1,
     pcf8575_pin_0_2,
     pcf8575_pin_0_3,
@@ -33,7 +34,7 @@ typedef enum{
     pcf8575_pin_0_5,
     pcf8575_pin_0_6,
     pcf8575_pin_0_7,
-    pcf8575_pin_1_0,
+    pcf8575_pin_1_0 = 0x80,
     pcf8575_pin_1_1,
     pcf8575_pin_1_2,
     pcf8575_pin_1_3,
@@ -65,5 +66,7 @@ void pcf8575_init(pcf8575_t *device,
 void pcf8575_set_directions(pcf8575_t *device, uint8_t port_0_dir, uint8_t port_1_dir);
 
 void pcf8575_write_ports(pcf8575_t *device, uint8_t port_0, uint8_t port_1);
+
+void pcr8575_set_pin(pcf8575_t *device, pcf8575_pin_t pin, bool logic_high);
 
 #endif /* HWO_PCF8575_H_ */
