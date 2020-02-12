@@ -8,6 +8,11 @@
 #ifndef HWO_PCF8575_H_
 #define HWO_PCF8575_H_
 
+#include <stdint.h>
+
+typedef uint8_t (*i2c_rx_cb_t)(uint8_t, uint8_t*, uint8_t);
+typedef uint8_t (*i2c_tx_cb_t)(uint8_t, const uint8_t*, uint8_t);
+
 typedef enum {
  pcf8575_addr_0x0 = 0b00100000,
  pcf8575_addr_0x1 = 0b00100001,
@@ -19,10 +24,46 @@ typedef enum {
  pcf8575_addr_0x7 = 0b00100111
 }pcf8575_addr_t;
 
+typedef enum{
+    pcf8575_pin_0_0,
+    pcf8575_pin_0_1,
+    pcf8575_pin_0_2,
+    pcf8575_pin_0_3,
+    pcf8575_pin_0_4,
+    pcf8575_pin_0_5,
+    pcf8575_pin_0_6,
+    pcf8575_pin_0_7,
+    pcf8575_pin_1_0,
+    pcf8575_pin_1_1,
+    pcf8575_pin_1_2,
+    pcf8575_pin_1_3,
+    pcf8575_pin_1_4,
+    pcf8575_pin_1_5,
+    pcf8575_pin_1_6,
+    pcf8575_pin_1_7
+}pcf8575_pin_t;
+
 typedef struct {
     pcf8575_addr_t address;
+    i2c_rx_cb_t i2c_read;
+    i2c_tx_cb_t i2c_write;
+    uint8_t port_0_dir;
+    uint8_t port_1_dir;
+    uint8_t port_0_out;
+    uint8_t port_1_out;
+
 }pcf8575_t;
 
-void pcf8575_init(pcf8575_t *device, pcf8575_addr_t address, );
+void pcf8575_init(pcf8575_t *device,
+                  pcf8575_addr_t address,
+                  uint8_t port_0_dir,
+                  uint8_t port_1_dir,
+                  uint8_t port_0_out,
+                  uint8_t port_1_out
+                  );
+
+void pcf8575_set_directions(pcf8575_t *device, uint8_t port_0_dir, uint8_t port_1_dir);
+
+void pcf8575_write_ports(pcf8575_t *device, uint8_t port_0, uint8_t port_1);
 
 #endif /* HWO_PCF8575_H_ */
