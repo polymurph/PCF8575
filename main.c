@@ -28,11 +28,12 @@ int main(void)
 	while(1)
 	{
 	    //pcf8575_write_ports(&gpio, 0xFF, 0x00);
-	    pcr8575_set_pin(&gpio,pcf8575_pin_1_3, false);
+	    //pcr8575_set_pin(&gpio,pcf8575_pin_1_3, false);
+	    pcf8575_toggle_pin(&gpio, pcf8575_pin_1_3);
 	    __delay_cycles(100000);
 	    //pcf8575_write_ports(&gpio, 0x00, 0xFF);
-	    pcr8575_set_pin(&gpio,pcf8575_pin_1_3, true);
-	    __delay_cycles(100000);
+	    //pcr8575_set_pin(&gpio,pcf8575_pin_1_3, true);
+	    //__delay_cycles(100000);
 	}
 
 	return 0;

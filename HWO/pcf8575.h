@@ -44,6 +44,11 @@ typedef enum{
     pcf8575_pin_1_7
 }pcf8575_pin_t;
 
+typedef enum {
+    pcf8575_dir_IN,
+    pcf8575_dir_OUT
+}pcf8575_dir_t;
+
 typedef struct {
     pcf8575_addr_t address;
     i2c_rx_cb_t i2c_read;
@@ -68,5 +73,9 @@ void pcf8575_set_directions(pcf8575_t *device, uint8_t port_0_dir, uint8_t port_
 void pcf8575_write_ports(pcf8575_t *device, uint8_t port_0, uint8_t port_1);
 
 void pcr8575_set_pin(pcf8575_t *device, pcf8575_pin_t pin, bool logic_high);
+
+void pcf8575_toggle_pin(pcf8575_t *device, pcf8575_pin_t pin);
+
+void pcf8575_set_pin_dir(pcf8575_t *device, pcf8575_pin_t pin, pcf8575_dir_t direction);
 
 #endif /* HWO_PCF8575_H_ */

@@ -39,6 +39,7 @@ void pcf8575_write_ports(pcf8575_t *device, uint8_t port_0, uint8_t port_1)
 void pcr8575_set_pin(pcf8575_t *device, pcf8575_pin_t pin, bool logic_high)
 {
     uint8_t data[2];
+
     if(pin & 0x80){
         pin &= ~0x80;
         if(logic_high) {
@@ -61,6 +62,24 @@ void pcr8575_set_pin(pcf8575_t *device, pcf8575_pin_t pin, bool logic_high)
 }
 
 void pcf8575_toggle_pin(pcf8575_t *device, pcf8575_pin_t pin)
+{
+    uint8_t data[2];
+
+    if(pin & 0x80){
+        pin &= ~0x80;
+        device->port_1_out ^= (1 << pin);
+    } else {
+        device->port_0_out ^= (1 << pin);
+    }
+
+    data[0] = ~(device->port_0_dir) | device->port_0_out;
+    data[1] = ~(device->port_1_dir) | device->port_1_out;
+
+    device->i2c_write((uint8_t)(device->address), data, 2);
+
+}
+
+void pcf8575_set_pin_dir(pcf8575_t *device, pcf8575_pin_t pin, pcf8575_dir_t direction)
 {
 
 }
