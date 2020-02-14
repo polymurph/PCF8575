@@ -13,6 +13,8 @@
 
 static inline void _initiate_start_condition();
 
+static inline void _initiate_rx_start_condition();
+
 static inline void _initiate_stop_condition();
 
 static inline void _stop_sequence()
@@ -263,7 +265,6 @@ uint8_t hal_i2c_write(uint8_t address, const uint8_t * data, uint8_t len)
     // poll for address transmission completion
     while(UCB0CTLW0 & UCTXSTT);
 
-    // TODO: check for NACK here!
     if(UCB0IFG & UCNACKIFG) {
         UCB0IFG &= ~UCNACKIFG;
         _initiate_stop_condition();
@@ -292,15 +293,58 @@ uint8_t hal_i2c_write(uint8_t address, const uint8_t * data, uint8_t len)
 
 bool hal_i2c_read_Byte(uint8_t address, uint8_t *byte)
 {
+
+
     if(_start_sequence(address, true)) return true;
     *byte = _read_rx_buf();
     _stop_sequence();
     return false;
+
 }
 
-void hal_i2c_read(uint8_t address, uint8_t * data, uint8_t len)
+uint8_t hal_i2c_read(uint8_t address, uint8_t * data, uint8_t len)
 {
+    if(len == 0) return i2c_error_DATA_LEN_IS_0;
 
+    // clear old flags
+    UCB0IFG = 0;
+
+    // set slave address
+    UCB0I2CSA = address;
+
+    // setting receiver mode
+    UCB0CTLW0 &= ~UCTR;
+
+    _initiate_rx_start_condition();
+
+    // poll for address transmission completion
+    while(UCB0CTLW0 & UCTXSTT);
+
+    if(UCB0IFG & UCNACKIFG) {
+        UCB0IFG &= ~UCNACKIFG;
+        _initiate_stop_condition();
+        return i2c_error_DEVICE_NOT_FOUND;
+    }
+
+    do{
+
+
+        if(UCB0IFG & UCNACKIFG) {
+            UCB0IFG &= ~UCNACKIFG;
+            _initiate_stop_condition();
+            return i2c_error_RECIVED_NACK;
+        }
+
+        // read data
+        *data = UCB0RXBUF;
+        while(!(UCB0IFG & UCRXIFG));
+
+
+    }while(len--);
+
+    _initiate_stop_condition();
+
+    return i2c_error_NONE;
 }
 
 
@@ -313,6 +357,15 @@ static inline void _initiate_start_condition()
 
     // poll for UCTXIFG0
     while(!(UCB0IFG & UCTXIFG0));
+}
+
+static inline void _initiate_rx_start_condition()
+{
+    // generate start condition
+    UCB0CTLW0 |= UCTXSTT;
+
+    // poll for UCTXIFG0
+    //while(!(UCB0IFG & UCRXIFG0));
 }
 
 static inline void _initiate_stop_condition()

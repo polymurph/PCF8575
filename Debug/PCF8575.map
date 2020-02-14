@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v18.12.4                    
 ******************************************************************************
->> Linked Wed Feb 12 17:02:50 2020
+>> Linked Fri Feb 14 11:06:46 2020
 
 OUTPUT FILE NAME:   <PCF8575.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs_mpu"  address: 00004400
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00014000  000001d2  00013e2e  RWIX
+  FRAM2                 00010000   00014000  000002ac  00013d54  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -230,34 +230,36 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.text      0    00010000    000001d2     
+.text      0    00010000    000002ac     
                   00010000    000000a0     hal_i2c.obj (.text:hal_i2c_write)
-                  000100a0    00000054     pcf8575.obj (.text:pcf8575_toggle_pin)
-                  000100f4    00000050     main.obj (.text:main)
-                  00010144    0000004e     hal_i2c.obj (.text:hal_i2c_init)
-                  00010192    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  000101be    0000000a     rts430x_lc_rd_eabi.lib : lsl16.asm.obj (.text)
-                  000101c8    00000006                            : exit.c.obj (.text:abort)
-                  000101ce    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+                  000100a0    0000008a     hal_i2c.obj (.text:hal_i2c_read)
+                  0001012a    00000064     main.obj (.text:main)
+                  0001018e    00000054     pcf8575.obj (.text:pcf8575_toggle_pin)
+                  000101e2    0000004e     hal_i2c.obj (.text:hal_i2c_init)
+                  00010230    0000003c     pcf8575.obj (.text:pcf8575_write_ports)
+                  0001026c    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  00010298    0000000a     rts430x_lc_rd_eabi.lib : lsl16.asm.obj (.text)
+                  000102a2    00000006                            : exit.c.obj (.text:abort)
+                  000102a8    00000004                            : pre_init.c.obj (.text:_system_pre_init)
 
 MODULE SUMMARY
 
        Module             code   ro data   rw data
        ------             ----   -------   -------
     .\
-       main.obj           80     0         0      
+       main.obj           100    0         0      
     +--+------------------+------+---------+---------+
-       Total:             80     0         0      
+       Total:             100    0         0      
                                                   
     .\HAL\
-       hal_i2c.obj        238    0         0      
+       hal_i2c.obj        376    0         0      
     +--+------------------+------+---------+---------+
-       Total:             238    0         0      
+       Total:             376    0         0      
                                                   
     .\HWO\
-       pcf8575.obj        84     0         0      
+       pcf8575.obj        144    0         0      
     +--+------------------+------+---------+---------+
-       Total:             84     0         0      
+       Total:             144    0         0      
                                                   
     C:\ti\ccs910\ccs\ccs_base\msp430\lib\FR59xx\MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
        mpu_init.o         44     0         0      
@@ -303,7 +305,7 @@ MODULE SUMMARY
                                                   
        Stack:             0      0         160    
     +--+------------------+------+---------+---------+
-       Grand Total:       498    58        160    
+       Grand Total:       716    58        160    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -567,7 +569,7 @@ address   name
 000009ce  AESAXIN_L                 
 000004be  BCD2BIN                   
 000004bc  BIN2BCD                   
-000101c8  C$$EXIT                   
+000102a2  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -1723,25 +1725,27 @@ ffffffff  __TI_prof_data_size
 ffffffff  __TI_prof_data_start      
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-00010192  __mpu_init                
-000101be  __mspabi_slli             
+0001026c  __mpu_init                
+00010298  __mspabi_slli             
 00004400  _c_int00_noinit_noargs_mpu
 0000fffe  _reset_vector             
 00002360  _stack                    
-000101ce  _system_pre_init          
-000101c8  abort                     
+000102a8  _system_pre_init          
+000102a2  abort                     
 00004400  fram_ipe_end              
 00004400  fram_ipe_start            
 00004400  fram_rw_start             
 00004400  fram_rx_start             
-00010144  hal_i2c_init              
+000101e2  hal_i2c_init              
+000100a0  hal_i2c_read              
 00010000  hal_i2c_write             
-000100f4  main                      
+0001012a  main                      
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000440  mpu_segment_border1       
 00000440  mpu_segment_border2       
-000100a0  pcf8575_toggle_pin        
+0001018e  pcf8575_toggle_pin        
+00010230  pcf8575_write_ports       
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -3168,17 +3172,19 @@ address   name
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
 00010000  hal_i2c_write             
-000100a0  pcf8575_toggle_pin        
-000100f4  main                      
-00010144  hal_i2c_init              
-00010192  __mpu_init                
-000101be  __mspabi_slli             
-000101c8  C$$EXIT                   
-000101c8  abort                     
-000101ce  _system_pre_init          
+000100a0  hal_i2c_read              
+0001012a  main                      
+0001018e  pcf8575_toggle_pin        
+000101e2  hal_i2c_init              
+00010230  pcf8575_write_ports       
+0001026c  __mpu_init                
+00010298  __mspabi_slli             
+000102a2  C$$EXIT                   
+000102a2  abort                     
+000102a8  _system_pre_init          
 ffffffff  __TI_pprof_out_hndl       
 ffffffff  __TI_prof_data_size       
 ffffffff  __TI_prof_data_start      
 ffffffff  __c_args__                
 
-[1432 symbols]
+[1434 symbols]

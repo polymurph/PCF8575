@@ -78,4 +78,6 @@ void pcf8575_toggle_pin(pcf8575_t *device, pcf8575_pin_t pin);
 
 void pcf8575_set_pin_dir(pcf8575_t *device, pcf8575_pin_t pin, pcf8575_dir_t direction);
 
+bool pcf8575_read_pin(pcf8575_t *device, pcf8575_pin_t pin);
+
 #endif /* HWO_PCF8575_H_ */

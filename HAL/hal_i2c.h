@@ -66,7 +66,7 @@ uint8_t hal_i2c_write(uint8_t          address,
 bool hal_i2c_read_Byte(uint8_t  address,
                        uint8_t* byte);
 
-void hal_i2c_read(uint8_t   address,
+uint8_t hal_i2c_read(uint8_t   address,
                   uint8_t*  data,
                   uint8_t   len);
 
